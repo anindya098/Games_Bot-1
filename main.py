@@ -17,7 +17,7 @@ def echo(bot, update):
 	bot.send_message(chat_id=update.message.chat_id, text=update.message.text)
 
 def help(bot, update):
-	bot.send_message(chat_id=update.message.chat_id, text="I am nigger and I cannot help :(")
+	bot.send_message(chat_id=update.message.chat_id, text="I am poorly programmed and cannot help :(")
 
 def stats(bot, update, args):
 	summoner_name = ""
