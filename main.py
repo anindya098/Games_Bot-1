@@ -51,13 +51,10 @@ def fortnite(bot, update, args):
 		question = "@TheBoneDoctor @prankpatrol @Insolent_child @bleachonmytshirt @AtraWolf @hotterthanahotdog @SaveTheBeeees fortnite?"
 		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 
-	elif (len(args) == 1 and args[0] == "shop"):
-		pass
+	elif (args == "shop"):
 		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text="Let me open the shop up! One second please.")
-		item_list = fnite.getStore()
-		for item in item_list:
-			bot.send_media_group(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, media=item_list)
-		#bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=resp)
+		resp = fnite.getStore()
+		bot.send_media_group(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, media=media)
 	else:
 		name = ""
 		for word in args:
@@ -139,6 +136,15 @@ def main():
 	dispatcher.add_handler(overwatch_handler)
 	dispatcher.add_handler(forest_handler)
 	dispatcher.add_handler(dauntless_handler)
+
+	dispatcher.add_handler(interjection_handler)	
+	dispatcher.add_handler(unknown_handler)
+
+	updater.start_polling()
+
+main()
+
+add_handler(dauntless_handler)
 
 	dispatcher.add_handler(interjection_handler)	
 	dispatcher.add_handler(unknown_handler)

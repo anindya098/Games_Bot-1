@@ -1,3 +1,4 @@
+from telegram import InputMedia, InputMediaPhoto
 import requests, json, os
 
 
@@ -29,9 +30,9 @@ def getStore():
 	headers = {'TRN-Api-Key' : API_key}
 	r = requests.get(url, headers=headers)
 	data = r.json()
-	items = []
+	resp = []
 
 	for item in data:
-		items.append(item['imageUrl'])
+		resp += InputMediaPhoto(media=item['imageUrl'], caption=item['name'] + " - " + item['vBucks'] + "V-Bucks")
 
-	return(items)
+	return(resp)
