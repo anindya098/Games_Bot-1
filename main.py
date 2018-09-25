@@ -53,8 +53,11 @@ def fortnite(bot, update, args):
 
 	elif (len(args) == 1 and args[0] == "shop"):
 		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text="Let me open the shop up! One second please.")
-		resp = fnite.getStore()
+		resp = fnite.getWeeklyStore()
 		bot.send_media_group(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, media=resp)
+		resp = fnite.getDailyStore()
+		bot.send_media_group(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, media=resp)
+
 	else:
 		name = ""
 		for word in args:
