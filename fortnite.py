@@ -32,6 +32,6 @@ def getStore():
 	resp = ""
 
 	for item in data:
-		resp += data[item]['name'] + "\n"
+		resp += item['name'] + "\n"
 
 	return(resp)
