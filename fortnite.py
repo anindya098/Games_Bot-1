@@ -29,9 +29,9 @@ def getStore():
 	headers = {'TRN-Api-Key' : API_key}
 	r = requests.get(url, headers=headers)
 	data = r.json()
-	resp = ""
+	items = []
 
 	for item in data:
-		resp += item['name'] + "\n"
+		items.append(item['imageUrl'])
 
-	return(resp)
+	return(items)
