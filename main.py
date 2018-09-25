@@ -144,12 +144,3 @@ def main():
 
 main()
 
-add_handler(dauntless_handler)
-
-	dispatcher.add_handler(interjection_handler)	
-	dispatcher.add_handler(unknown_handler)
-
-	updater.start_polling()
-
-main()
-
