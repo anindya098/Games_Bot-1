@@ -34,6 +34,6 @@ def getWeeklyStore():
 
 	for item in data:
 		if(item['storeCategory'] == "BRWeeklyStorefront"):
-			resp += InputMediaPhoto(media=item['imageUrl'], caption=item['name'] + " - " + item['vBucks'] + "V-Bucks")
+			resp.append(InputMediaPhoto(media=item['imageUrl'], caption=item['name'] + " - " + item['vBucks'] + "V-Bucks"))
 
 	return(resp)
