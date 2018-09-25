@@ -23,3 +23,15 @@ def getStats(name, platform="pc"):
 	resp = "{}'s Stats:\n\nSolo Kills: {}\nSolo K/D: {}\nSolo Wins: {}\n------------\nDuo Kills: {}\nDuo K/D: {}\nDuo Wins: {}\n------------\nSquad Kills: {}\nSquad K/D: {}\nSquad Wins: {}".format(epic_name, solo_kills, solo_kd, solo_wins, duo_kills, duo_kd, duo_wins, squad_kills, squad_kd, squad_wins)
 	return(resp)
 
+def getStore():
+	url = "https://api.fortnitetracker.com/v1/store"
+	API_key = os.getenv('FORTNITE_API_KEY')
+	headers = {'TRN-Api-Key' : API_key}
+	r = requests.get(url, headers=headers)
+	data = r.json()
+	resp = ""
+
+	for item in data:
+		resp += data[item]['name'] + "\n"
+
+	return(resp)

@@ -51,6 +51,9 @@ def fortnite(bot, update, args):
 		question = "@TheBoneDoctor @prankpatrol @Insolent_child @bleachonmytshirt @AtraWolf @hotterthanahotdog @SaveTheBeeees fortnite?"
 		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 
+	elif (args == "shop"):
+		resp = fnite.getStore()
+		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=resp)
 	else:
 		name = ""
 		for word in args:
