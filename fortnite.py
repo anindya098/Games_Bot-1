@@ -24,7 +24,7 @@ def getStats(name, platform="pc"):
 	resp = "{}'s Stats:\n\nSolo Kills: {}\nSolo K/D: {}\nSolo Wins: {}\n------------\nDuo Kills: {}\nDuo K/D: {}\nDuo Wins: {}\n------------\nSquad Kills: {}\nSquad K/D: {}\nSquad Wins: {}".format(epic_name, solo_kills, solo_kd, solo_wins, duo_kills, duo_kd, duo_wins, squad_kills, squad_kd, squad_wins)
 	return(resp)
 
-def getStore():
+def getWeeklyStore():
 	url = "https://api.fortnitetracker.com/v1/store"
 	API_key = os.getenv('FORTNITE_API_KEY')
 	headers = {'TRN-Api-Key' : API_key}
@@ -33,6 +33,7 @@ def getStore():
 	resp = []
 
 	for item in data:
-		resp += InputMediaPhoto(media=item['imageUrl'], caption=item['name'] + " - " + item['vBucks'] + "V-Bucks")
+		if(item['storeCategory'] == "BRWeeklyStorefront"):
+			resp += InputMediaPhoto(media=item['imageUrl'], caption=item['name'] + " - " + item['vBucks'] + "V-Bucks")
 
 	return(resp)
