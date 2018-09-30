@@ -67,7 +67,7 @@ def getDailyStore():
 
 
 def getChallenges():
-	url - "https://api.fortnitetracker.com/v1/challenges"
+	url = "https://api.fortnitetracker.com/v1/challenges"
 	API_key = os.getenv('FORTNITE_API_KEY')
 	headers = {'TRN-Api-Key' : API_key}
 	r = requests.get(url, headers=headers)
