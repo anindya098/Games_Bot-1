@@ -64,3 +64,24 @@ def getDailyStore():
 			resp.append(InputMediaPhoto(media=item['imageUrl'], caption=item['name'] + " - " + str(item['vBucks']) + " V-Bucks"))
 
 	return(resp)
+
+
+def getChallenges():
+	url - "https://api.fortnitetracker.com/v1/challenges"
+	API_key = os.getenv('FORTNITE_API_KEY')
+	headers = {'TRN-Api-Key' : API_key}
+	r = requests.get(url, headers=headers)
+	data = r.json()
+	resp = ""
+
+	for item in data['items']:
+		challenge = item['metadata'][1]['value']
+		current = item['metadata'][2]['value']
+		total = item['metadata'][3]['value']
+		reward = item['metadata'][5]['value']
+
+		resp += "{}: {}/{}. {} Battlestars\n".format(challenge, current, total, reward)
+
+	return resp
+
+
