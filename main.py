@@ -1,7 +1,7 @@
 
 import telegram
 import logging, random, os
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ParseMode
 from league import Summoner
 import strings
 import fortnite as fnite
@@ -60,7 +60,7 @@ def fortnite(bot, update, args):
 	elif (len(args) == 1 and args[0] == "challenges"):
 		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text="Let me check the challenges")
 		resp = fnite.getChallenges()
-		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=resp, parse_mode=telegram.ParseMode.MARKDOWN)
+		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=resp, parse_mode=ParseMode.MARKDOWN)
 	else:
 		name = ""
 		for word in args:
