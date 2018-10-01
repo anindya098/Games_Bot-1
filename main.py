@@ -1,7 +1,8 @@
 
 import telegram
 import logging, random, os
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ParseMode
+from telegram import ParseMode
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from league import Summoner
 import strings
 import fortnite as fnite
