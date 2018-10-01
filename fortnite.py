@@ -80,7 +80,7 @@ def getChallenges():
 		total = item['metadata'][3]['value']
 		reward = item['metadata'][5]['value']
 
-		resp += "{}: {}/{} \n{} Battlestars\n\n".format(challenge, current, total, reward)
+		resp += "{}: {}/{} \n**{} Battlestars**\n\n".format(challenge, current, total, reward)
 
 	return resp
 
