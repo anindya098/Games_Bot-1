@@ -2,7 +2,7 @@
 import telegram
 import logging, random, os
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-from league import Summoner
+import league as lg
 import strings
 import fortnite as fnite
 
@@ -20,25 +20,23 @@ def help(bot, update):
 	bot.send_message(chat_id=update.message.chat_id, text="I am poorly programmed and cannot help :(")
 
 def stats(bot, update, args):
+
 	summoner_name = ""
 	msg_ID = update.message.message_id
 
 	for i in args:
 		summoner_name = summoner_name + i + " "
-
-	print(args)
-	print(summoner_name)
-	try:
-		summoner = Summoner(summoner_name)
-		rank_info = summoner.division + " " + summoner.rank + ", " + str(summoner.lp) + " LP "
-		reply = rank_info
-		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=reply)
-	#If an IndexError occurs, then the summoner hasn't finished their placement matches
-	except IndexError:
-		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text="Play ranked you idiot")
-	#If a KeyError occurs, then the summoner name doesn't exist
-	except KeyError:
-		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text="That account doesn't exist dumbshit")
+	
+	reply = ""
+	champ_mastery_result = lg.getChampMastery(summoner_name)
+	count = 0
+	for champ in champ_mastery_result[0]:
+		reply += champ + " - " + str(champ_mastery_result[1][count]) + "\n"
+		count += 1
+	if(len(reply) <= 0):
+		reply = "Get a champ to level 7 you moron"
+	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=lg.getChampMastery(summoner_name))
+	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=reply)
 
 def league(bot, update):
 	msg_ID = update.message.message_id
