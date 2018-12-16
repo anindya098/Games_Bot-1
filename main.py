@@ -35,7 +35,6 @@ def stats(bot, update, args):
 		count += 1
 	if(len(reply) <= 0):
 		reply = "Get a champ to level 7 you moron"
-	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=lg.getChampMastery(summoner_name))
 	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=reply)
 
 def league(bot, update):
