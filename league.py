@@ -1,4 +1,6 @@
+from telegram import InputMedia, InputMediaPhoto
 import json, requests, os
+from imagestuff import addToImage
 
 #base_URL is the base URL for Riot's API. All calls extend this URL
 #API_key is the API key proved by Riot that is needed to use the API
@@ -40,7 +42,7 @@ def getChampDictionary():
 	data = r.json()
 	
 	for champo in data["data"]:
-		champ_dict[data["data"][champo]["key"]] = data["data"][champo]["name"]
+		champ_dict[data["data"][champo]["key"]] = data["data"][champo]["id"]
 
 	return champ_dict
 
@@ -54,9 +56,29 @@ def getChampMastery(summoner_name):
 	champs = []
 	points = []
 
+	data = sorted(data, key = lambda i : i["championPoints"], reverse = True)
 	for champ in data:
-		if (champ["championLevel"] == 7):
+		if not (len(champs) >= 5 and len(points) >= 5):
 			champs.append(champ_dict.get(str(champ["championId"])))
 			points.append(champ["championPoints"])
-
+		else:
+			break
 	return champs, points
+
+def getCurrentGame(summoner_name):
+	champ_dict = getChampDictionary()
+	summoner_info = getSummonerInfo(summoner_name)
+	url = base_URL + "spectator/v4/active-games/by-summoner/" + summoner_info[5]
+	r = requests.get(url, headers = headers)
+	data = r.json()
+	participants = data['participants']
+	#banned_champs = data['bannedChampions']
+	players = []
+	champs = []
+
+	for player in participants:
+		players.append(player['summonerName'])
+		champs.append(champ_dict.get(str(player['championId'])))
+
+	for i, player in enumerate(players):
+		addToImage(player, champs[i], i)

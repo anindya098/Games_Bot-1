@@ -37,6 +37,16 @@ def stats(bot, update, args):
 		reply = "Get a champ to level 7 you moron"
 	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=reply)
 
+def match(bot, update, args):
+	summoner_name = ""
+	msg_ID = update.message.message_id
+	for i in args:
+		summoner_name = summoner_name + i + " "
+
+	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text="Let me login and check the game! One second")
+	lg.getCurrentGame(summoner_name)
+	bot.send_photo(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, photo=open("tesload.png", 'rb'))
+
 def league(bot, update):
 	msg_ID = update.message.message_id
 	question = "@SaveTheBeeees @DankMemesCanMeltSteelBeams @hotterthanahotdog @bleachonmytshirt @Insolent_child league?"
@@ -119,6 +129,7 @@ def main():
 	help_handler = CommandHandler('help', help)
 	caps_handler = CommandHandler('caps', caps, pass_args=True)
 	stats_handler = CommandHandler('stats', stats, pass_args=True)
+	match_handler = CommandHandler('match', match, pass_args=True)
 	league_handler = CommandHandler('league', league)
 	fortnite_handler = CommandHandler('fortnite', fortnite, pass_args=True)
 	overwatch_handler = CommandHandler('overwatch', overwatch)
@@ -134,6 +145,7 @@ def main():
 	dispatcher.add_handler(help_handler)
 	dispatcher.add_handler(caps_handler)
 	dispatcher.add_handler(stats_handler)
+	dispatcher.add_handler(match_handler)
 	dispatcher.add_handler(league_handler)
 	dispatcher.add_handler(fortnite_handler)
 	dispatcher.add_handler(overwatch_handler)
