@@ -1,3 +1,7 @@
+"""
+This is the main file for the bot, this is the file that must be run for the bot to work. MOST of the methods in this file coorespond to different commands that the bot can handle
+Docs for the Telegram Bot API: https://python-telegram-bot.readthedocs.io/en/stable/index.html
+"""
 
 import telegram
 import logging, random, os
@@ -6,68 +10,94 @@ import league as lg
 import strings
 import fortnite as fnite
 
+#Telegram gives each bot a specific identifier or token that is required for it to work
 TOKEN = os.getenv('GAMES_BOT_TOKEN')
 
-
-
+#command /start sends a message
 def start(bot, update):
 	bot.send_message(chat_id=update.message.chat_id, text="Beep Beep Boop! I am a bot!")
 
-def echo(bot, update):
-	bot.send_message(chat_id=update.message.chat_id, text=update.message.text)
-
+#command /help sends a funny reply that isn't that helpful
 def help(bot, update):
 	bot.send_message(chat_id=update.message.chat_id, text="I am poorly programmed and cannot help :(")
 
+#command /stats [name] sends back info on the most played champions in League of Legends for the name given
 def stats(bot, update, args):
-
 	summoner_name = ""
+	
+	#msg_ID is the ID of the message that called the command, this is used so the bot can reply to the specific message
 	msg_ID = update.message.message_id
 
+	#args given after the command are given as a list, this basically forms the players name if there were spaces in it
 	for i in args:
 		summoner_name = summoner_name + i + " "
 	
 	reply = ""
+	
+	#getChampMastery(summoner_name) returns a tuple with info regarding a players most played champs (found in league.py)
+	#The tuple looks like ([list of champions], [list of mastery points])
 	champ_mastery_result = lg.getChampMastery(summoner_name)
 	count = 0
+	#For each champion (up to 5), add to a string their name and the points the player has on them.
 	for champ in champ_mastery_result[0]:
 		reply += champ + " - " + str(champ_mastery_result[1][count]) + "\n"
 		count += 1
 	if(len(reply) <= 0):
-		reply = "Get a champ to level 7 you moron"
+		reply = "Wow, something went wrong!"
+	
+	#Bot replies to the message with the command with the reply string
 	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=reply)
 
+#command /match [name] sends back an image detailing the players and champions in the specified players League of Legends game. (This command takes a while to finish, but can be fixed)
 def match(bot, update, args):
 	summoner_name = ""
 	msg_ID = update.message.message_id
 	for i in args:
 		summoner_name = summoner_name + i + " "
 
+	#Bot sends a message saying that it is working on the request
 	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text="Let me login and check the game! One second")
+	
+	#Calls a method that will modify an image that the bot will send. (method found in league.py)
 	lg.getCurrentGame(summoner_name)
+
+	#The image being modified is saved to disk, so once the method above is finished the bot can send the file, and telegram takes care of the rest
 	bot.send_photo(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, photo=open("tesload.png", 'rb'))
 
+#command /league makes the bot tag everyone in the chat that plays League of Legends by their telegram username
 def league(bot, update):
 	msg_ID = update.message.message_id
 	question = "@SaveTheBeeees @DankMemesCanMeltSteelBeams @hotterthanahotdog @bleachonmytshirt @Insolent_child league?"
 	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 
+#command /fortnite can take optional arguments
 def fortnite(bot, update, args):
 	msg_ID = update.message.message_id
+
+	#command /fortnite makes the bot tag everyone in the chat that plays Fortnite by their telegram username
 	if not args:
 		question = "@TheBoneDoctor @prankpatrol @Insolent_child @bleachonmytshirt @AtraWolf @hotterthanahotdog @SaveTheBeeees fortnite?"
 		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 
+	#command /fortnite shop makes the bot reply with an album of images detailing what is currently in the fortnite shop
 	elif (len(args) == 1 and args[0] == "shop"):
 		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text="Let me open the shop up! One second please.")
+		
+		#Sends an album with every weekly item in the shop
 		resp = fnite.getWeeklyStore()
 		bot.send_media_group(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, media=resp)
+		
+		#Sends an album with every daily item in the shop
 		resp = fnite.getDailyStore()
 		bot.send_media_group(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, media=resp)
+
+	#command /fortnite challenges makes the bot reply with the current weekly challenges in Fortnite
 	elif (len(args) == 1 and args[0] == "challenges"):
 		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text="Let me check the challenges")
 		resp = fnite.getChallenges()
 		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=resp)
+	
+	#command /fortnite [name] gets the bot to send [name]'s stats in the current Fortnite season
 	else:
 		name = ""
 		for word in args:
@@ -76,55 +106,58 @@ def fortnite(bot, update, args):
 		resp = fnite.getStats(name)
 		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=resp)
 
+#command /overwatch makes the bot tag everyone in the chat that plays Overwatch by their telegram username
 def overwatch(bot, update):		
 	msg_ID = update.message.message_id
 	question = "@SaveTheBeeees @DankMemesCanMeltSteelBeams @hotterthanahotdog @bleachonmytshirt @prankpatrol @AtraWolf Overwatch?"
 	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 
+#command /forest makes the bot tag everyone in the chat that plays The Forest by their telegram username
 def forest(bot, update):
 	msg_ID = update.message.message_id
 	question = "@prankpatrol @Insolent_child @AtraWolf @SaveTheBeeees @DankMemesCanMeltSteelBeams forest?"
 	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 
+#command /dauntless makes the bot tag everyone in the chat that plays Dauntless by their telegram username
 def dauntless(bot, update):
 	msg_ID = update.message.message_id
 	question = "@prankpatrol @Insolent_child @AtraWolf @SaveTheBeeees @DankMemesCanMeltSteelBeams dauntless?"
 	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 
-#Function that reads the chat, and if a user says certain words it will interrupt.
+#Method that reads every message sent in chat, and if a user says certain words it will interrupt.
 def interjection(bot, update):
+	#get some info for each message, like who sent it
 	from_user = update.message.from_user.first_name
 	msg_ID = update.message.message_id
 	msg_text = update.message.text.lower()
 	msg_lst = msg_text.split()
 
-	#bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=from_user)
-	#If Kalada says the word yi, then reply
+	#If Kalada says the word yi, then trash talk him (replies are picked at random from a list in strings.py)
 	if(from_user == "Kalada" and "yi" in msg_lst):
 		i = random.randrange(len(strings.master_yi))
 		reply = strings.master_yi[i]
 		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=reply)
 
-	if(from_user == "Hardeep" and "for honor" in msg_lst):
-		reply = "Dead Game"
-		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=reply)
-
-
+#If a user types in a command that doesn't exist then the bot will reply to them (doesn't work yet)
 def unknown(bot, update):
 	bot.send_message(chat_id=update.message.chat_id, text="Sorry I didn't understand that command. :(")
 
+#command /caps [string] makes the bot reply with the same string but in all upper case
 def caps(bot, update, args):
 	text_caps = ' '.join(args).upper()
 	bot.send_message(chat_id=update.message.chat_id, text=text_caps)
 
-
+#Main method that is ran when the bot is started up
 def main():
+	#Basic stuff required by telegram to make the bot work. Basically lets Telegram know who the bot is / who it belongs to.
 	bot = telegram.Bot(token=TOKEN)
 	updater = Updater(token=TOKEN)
 	dispatcher = updater.dispatcher
 	logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
-	#echo_handler = MessageHandler(Filters.text, echo)
+	#Each command that the bot can handle needs a "Handler". These basically map the command (/[command] to a method in main.py)
+	#It is set up so the commands execute methods with the exact same name, but the command is the first argument, and the method that it executes is the second.
+	#pass_args says whether the command can take additional arguments (bot uses these for summoner names, or fortnite names). Default is to False
 	start_handler = CommandHandler('start', start)
 	help_handler = CommandHandler('help', help)
 	caps_handler = CommandHandler('caps', caps, pass_args=True)
@@ -137,10 +170,11 @@ def main():
 	dauntless_handler = CommandHandler('dauntless', dauntless)
 	interjection_handler = MessageHandler(Filters.all, interjection)
 
+	#Unkown doesn't quite work yet
 	unknown_handler = MessageHandler(Filters.command, unknown)
 
-
-	#dispatcher.add_handler(echo_handler)
+	#This adds handlers to the bot's dispatcher more info at: https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.dispatcher.html
+	#Basically every command needs to have a handler and then that handler needs to be added to the dispatcher to work. If you don't add a handler to the dispatcher then it won't work.
 	dispatcher.add_handler(start_handler)
 	dispatcher.add_handler(help_handler)
 	dispatcher.add_handler(caps_handler)
@@ -155,6 +189,8 @@ def main():
 	dispatcher.add_handler(interjection_handler)	
 	dispatcher.add_handler(unknown_handler)
 
+	#After setting up the handlers and the dispatcher, the bot starts polling, which means that the bot will now read updates from Telegram, and any update will be handled by a handler
+	#Because of this, the program runs until forcefully quit (^C)
 	updater.start_polling()
 
 main()

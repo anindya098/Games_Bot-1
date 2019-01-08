@@ -8,5 +8,4 @@ master_yi = ["no skill champ",
 			 "Your skills are inferior", 
 			 "i wish i could right click and get a pentakill", 
 			 "maybe if you ganked once in a while you wouldn't be gold.", 
-			 "Highlander? you play like you're high",
 			 "nice press r champ"]
