@@ -67,7 +67,7 @@ def match(bot, update, args):
 #command /league makes the bot tag everyone in the chat that plays League of Legends by their telegram username
 def league(bot, update):
 	msg_ID = update.message.message_id
-	question = "@SaveTheBeeees @DankMemesCanMeltSteelBeams @hotterthanahotdog @bleachonmytshirt @Insolent_child league?"
+	question = "@SaveTheBeeees @DankMemesCanMeltSteelBeams @hotterthanahotdog @bleachonmytshirt @Insolent_child @AtraWolf league?"
 	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 
 #command /dota makes the bot tag everyone in the chat that plays Dota by their telegram username
