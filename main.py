@@ -70,6 +70,13 @@ def league(bot, update):
 	question = "@SaveTheBeeees @DankMemesCanMeltSteelBeams @hotterthanahotdog @bleachonmytshirt @Insolent_child league?"
 	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 
+#command /dota makes the bot tag everyone in the chat that plays Dota by their telegram username
+def dota(bot, update):
+	msg_ID = update.message.message_id
+	question = "@Insolent_child @AtraWolf @prankpatrol dota?"
+	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
+
+
 #command /fortnite can take optional arguments
 def fortnite(bot, update, args):
 	msg_ID = update.message.message_id
@@ -164,6 +171,7 @@ def main():
 	stats_handler = CommandHandler('stats', stats, pass_args=True)
 	match_handler = CommandHandler('match', match, pass_args=True)
 	league_handler = CommandHandler('league', league)
+	dota_handler = CommandHandler('dota', dota)
 	fortnite_handler = CommandHandler('fortnite', fortnite, pass_args=True)
 	overwatch_handler = CommandHandler('overwatch', overwatch)
 	forest_handler = CommandHandler('forest', forest)
@@ -181,6 +189,7 @@ def main():
 	dispatcher.add_handler(stats_handler)
 	dispatcher.add_handler(match_handler)
 	dispatcher.add_handler(league_handler)
+	dispatcher.add_handler(dota_handler)
 	dispatcher.add_handler(fortnite_handler)
 	dispatcher.add_handler(overwatch_handler)
 	dispatcher.add_handler(forest_handler)
