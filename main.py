@@ -69,7 +69,6 @@ def league(bot, update, args):
 	msg_ID = update.message.message_id
 
 	if not args:
-		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=args)
 		question = "@SaveTheBeeees @DankMemesCanMeltSteelBeams @hotterthanahotdog @bleachonmytshirt @Insolent_child league?"
 		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 	else:
