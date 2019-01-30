@@ -86,6 +86,26 @@ def getChampMastery(summoner_name):
 	return champs, points
 
 
+def getRankedStats(summoner_name):
+	summoner_info = getSummonerInfo(summoner_name)
+	summoner_id = summoner_info[5]
+
+	#Make the API call based off of the player name given
+	url = base_URL + "league/v4/positions/by-summoner/" + summoner_id
+	r = requests.get(url, headers=headers)
+	data = r.json()
+	resp = ""
+	
+	for position in data:
+		pos = position['position']
+		tier = position['tier']
+		rank = position['rank']
+		lp = position['leaguePoints']
+		
+		resp += "*{}:*\n{} {}, {}LP \n\n".format(pos.capitalize(), tier.capitalize(), rank, lp)
+
+	return resp
+
 #Method that will return an image detailing all the players and champions in a specified players game
 def getCurrentGame(summoner_name):
 	
