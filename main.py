@@ -65,10 +65,22 @@ def match(bot, update, args):
 	bot.send_photo(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, photo=open("tesload.png", 'rb'))
 
 #command /league makes the bot tag everyone in the chat that plays League of Legends by their telegram username
-def league(bot, update):
+def league(bot, update, args):
 	msg_ID = update.message.message_id
-	question = "@SaveTheBeeees @DankMemesCanMeltSteelBeams @hotterthanahotdog @bleachonmytshirt @Insolent_child @AtraWolf league?"
-	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
+	if not args:
+		question = "@SaveTheBeeees @DankMemesCanMeltSteelBeams @hotterthanahotdog @bleachonmytshirt @Insolent_child league?"
+		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
+	else:
+		summoner_name = ""
+		msg_ID = update.message.message_id
+		for i in args:
+			summoner_name = summoner_name + i + " "
+
+		ranked_stats = lg.getRankedStats(summoner_name)
+		if(ranked_stats == ""):
+			bot.send_message(parse_mode='MARKDOWN', chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text="Hey you gotta play ranked dude!")
+		else:	
+			bot.send_message(parse_mode='MARKDOWN', chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=ranked_stats)
 
 #command /dota makes the bot tag everyone in the chat that plays Dota by their telegram username
 def dota(bot, update):
@@ -170,7 +182,7 @@ def main():
 	caps_handler = CommandHandler('caps', caps, pass_args=True)
 	stats_handler = CommandHandler('stats', stats, pass_args=True)
 	match_handler = CommandHandler('match', match, pass_args=True)
-	league_handler = CommandHandler('league', league)
+	league_handler = CommandHandler('league', league, pass_args=True)
 	dota_handler = CommandHandler('dota', dota)
 	fortnite_handler = CommandHandler('fortnite', fortnite, pass_args=True)
 	overwatch_handler = CommandHandler('overwatch', overwatch)
