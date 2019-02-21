@@ -9,6 +9,7 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import league as lg
 import strings
 import fortnite as fnite
+import apex as apx
 
 #Telegram gives each bot a specific identifier or token that is required for it to work
 TOKEN = os.getenv('GAMES_BOT_TOKEN')
@@ -72,7 +73,6 @@ def league(bot, update, args):
 		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 	else:
 		summoner_name = ""
-		msg_ID = update.message.message_id
 		for i in args:
 			summoner_name = summoner_name + i + " "
 
@@ -101,7 +101,8 @@ def fortnite(bot, update, args):
 	#command /fortnite shop makes the bot reply with an album of images detailing what is currently in the fortnite shop
 	elif (len(args) == 1 and args[0] == "shop"):
 		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text="Let me open the shop up! One second please.")
-		
+		bot.send_chat_action(chat_id=update.message.chat_id, action="UPLOAD_PHOTO")
+
 		#Sends an album with every weekly item in the shop
 		resp = fnite.getWeeklyStore()
 		bot.send_media_group(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, media=resp)
@@ -124,6 +125,32 @@ def fortnite(bot, update, args):
 
 		resp = fnite.getStats(name)
 		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=resp)
+
+def apex(bot, update, args):
+	msg_ID = update.message.message_id
+
+	if not args:
+		question = "@SaveTheBeeees @DankMemesCanMeltSteelBeams @hotterthanahotdog @AtraWolf @prankpatrol @Insolent_child apex?"
+		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
+	else:
+		platform = args[0]
+		player_name = ""
+		for i in args[1:]:
+				player_name = player_name + i + " "
+
+
+		if(platform.lower() == 'xbox'):
+			platform = 1
+		elif(platform.lower() == 'psn' or platform.lower() == 'ps4'):
+			platform = 2
+		elif(platform.lower() == 'pc'):
+			platform = 5
+		else:
+			bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text="Type /apex [platform] [name]\nPlatforms are xbox, psn, pc")
+	
+	resp = apx.getStats(platform, player_name)
+	bot.send_message(parse_mode='MARKDOWN', chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=resp)
+		
 
 #command /overwatch makes the bot tag everyone in the chat that plays Overwatch by their telegram username
 def overwatch(bot, update):		
@@ -185,6 +212,7 @@ def main():
 	league_handler = CommandHandler('league', league, pass_args=True)
 	dota_handler = CommandHandler('dota', dota)
 	fortnite_handler = CommandHandler('fortnite', fortnite, pass_args=True)
+	apex_handler = CommandHandler('apex', apex, pass_args=True)
 	overwatch_handler = CommandHandler('overwatch', overwatch)
 	forest_handler = CommandHandler('forest', forest)
 	dauntless_handler = CommandHandler('dauntless', dauntless)
@@ -203,6 +231,7 @@ def main():
 	dispatcher.add_handler(league_handler)
 	dispatcher.add_handler(dota_handler)
 	dispatcher.add_handler(fortnite_handler)
+	dispatcher.add_handler(apex_handler)
 	dispatcher.add_handler(overwatch_handler)
 	dispatcher.add_handler(forest_handler)
 	dispatcher.add_handler(dauntless_handler)
