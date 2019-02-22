@@ -2,7 +2,7 @@ from telegram import InputMedia, InputMediaPhoto
 import json, requests, os
 
 BASE_URL = "https://public-api.tracker.gg/apex/v1/standard/profile/"
-API_KEY = 'b519f694-0607-47d4-b89a-02c555002fab'
+API_KEY = os.getenv('APEX_API_KEY')
 HEADERS = {'TRN-Api-Key' : API_KEY}
 
 def getStats(platform, name):
