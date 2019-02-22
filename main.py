@@ -12,7 +12,7 @@ import fortnite as fnite
 import apex as apx
 
 #Telegram gives each bot a specific identifier or token that is required for it to work
-TOKEN = os.getenv('GAMES_BOT_TOKEN')
+TOKEN = '474898864:AAGroqV6gFJP5d8oPJhu_lDwSq92N_Atg3k'
 
 #command /start sends a message
 def start(bot, update):
@@ -130,7 +130,7 @@ def apex(bot, update, args):
 	msg_ID = update.message.message_id
 
 	if not args:
-		question = "@SaveTheBeeees @DankMemesCanMeltSteelBeams @hotterthanahotdog @AtraWolf @prankpatrol @Insolent_child apex?"
+		question = "@SaveTheBeeees @DankMemesCanMeltSteelBeams @hotterthanahotdog @AtraWolf @prankpatrol apex?"
 		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 	else:
 		platform = args[0]
