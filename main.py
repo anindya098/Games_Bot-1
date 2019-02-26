@@ -12,7 +12,7 @@ import fortnite as fnite
 import apex as apx
 
 #Telegram gives each bot a specific identifier or token that is required for it to work
-TOKEN = os.getenv('GAMES_BOT_TOKEN')
+TOKEN = '474898864:AAGroqV6gFJP5d8oPJhu_lDwSq92N_Atg3k'
 
 #command /start sends a message
 def start(bot, update):
