@@ -15,8 +15,7 @@ def getStats(platform, name):
         return "That's not a player, babe"
     total_kills = data['stats'][1]['value']
     total_kills = int(total_kills)
-    #resp = "*Total Kills:* {}\n".format(total_kills)
-    resp = ""
+    resp = "*Total Kills:* {}\n".format(total_kills)
     for character in data['children']:
         character_name = character['metadata']['legend_name']
         resp += "*{}:* \n".format(character_name)
