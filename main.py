@@ -69,7 +69,7 @@ def match(bot, update, args):
 def league(bot, update, args):
 	msg_ID = update.message.message_id
 	if not args:
-		question = "@SaveTheBeeees @DankMemesCanMeltSteelBeams @hotterthanahotdog @bleachonmytshirt @BigDickCarry @Insolent_child league?"
+		question = "@SaveTheBeeees @VueTrash @hotterthanahotdog @bleachonmytshirt @BigDickCarry @Insolent_child league?"
 		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 	else:
 		summoner_name = ""
@@ -130,7 +130,7 @@ def apex(bot, update, args):
 	msg_ID = update.message.message_id
 
 	if not args:
-		question = "@SaveTheBeeees @DankMemesCanMeltSteelBeams @hotterthanahotdog @AtraWolf @prankpatrol apex?"
+		question = "@SaveTheBeeees @VueTrash @hotterthanahotdog @AtraWolf @prankpatrol apex?"
 		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 	else:
 		platform = args[0]
@@ -155,19 +155,19 @@ def apex(bot, update, args):
 #command /overwatch makes the bot tag everyone in the chat that plays Overwatch by their telegram username
 def overwatch(bot, update):		
 	msg_ID = update.message.message_id
-	question = "@SaveTheBeeees @DankMemesCanMeltSteelBeams @hotterthanahotdog @bleachonmytshirt @prankpatrol @AtraWolf Overwatch?"
+	question = "@SaveTheBeeees @VueTrash @hotterthanahotdog @bleachonmytshirt @prankpatrol @AtraWolf Overwatch?"
 	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 
 #command /forest makes the bot tag everyone in the chat that plays The Forest by their telegram username
 def forest(bot, update):
 	msg_ID = update.message.message_id
-	question = "@prankpatrol @Insolent_child @AtraWolf @SaveTheBeeees @DankMemesCanMeltSteelBeams forest?"
+	question = "@prankpatrol @Insolent_child @AtraWolf @SaveTheBeeees @VueTrash forest?"
 	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 
 #command /dauntless makes the bot tag everyone in the chat that plays Dauntless by their telegram username
 def dauntless(bot, update):
 	msg_ID = update.message.message_id
-	question = "@prankpatrol @Insolent_child @AtraWolf @SaveTheBeeees @DankMemesCanMeltSteelBeams dauntless?"
+	question = "@prankpatrol @Insolent_child @AtraWolf @SaveTheBeeees @VueTrash dauntless?"
 	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 
 #Method that reads every message sent in chat, and if a user says certain words it will interrupt.
