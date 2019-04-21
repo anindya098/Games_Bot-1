@@ -69,7 +69,7 @@ def match(bot, update, args):
 def league(bot, update, args):
 	msg_ID = update.message.message_id
 	if not args:
-		question = "@SaveTheBeeees @DankMemesCanMeltSteelBeams @hotterthanahotdog @bleachonmytshirt @Insolent_child league?"
+		question = "@SaveTheBeeees @anobdya @hotterthanahotdog @bleachonmytshirt @Insolent_child @AtraWolf league?"
 		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 	else:
 		summoner_name = ""
@@ -88,7 +88,12 @@ def dota(bot, update):
 	question = "@Insolent_child @AtraWolf @prankpatrol dota?"
 	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 
-
+#command /ror makes the bot tag everyone in the chat that plays Risk of Rain by their telegram username
+def ror(bot, update):
+	msg_ID = update.message.message_id
+	question = "@SaveTheBeeees @anobdya @Insolent_child @AtraWolf @prankpatrol Risk of Rain 2?"
+	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
+	
 #command /fortnite can take optional arguments
 def fortnite(bot, update, args):
 	msg_ID = update.message.message_id
@@ -130,7 +135,7 @@ def apex(bot, update, args):
 	msg_ID = update.message.message_id
 
 	if not args:
-		question = "@SaveTheBeeees @DankMemesCanMeltSteelBeams @hotterthanahotdog @AtraWolf @prankpatrol apex?"
+		question = "@SaveTheBeeees @anobdya @hotterthanahotdog @AtraWolf @prankpatrol apex?"
 		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 	else:
 		platform = args[0]
@@ -155,19 +160,19 @@ def apex(bot, update, args):
 #command /overwatch makes the bot tag everyone in the chat that plays Overwatch by their telegram username
 def overwatch(bot, update):		
 	msg_ID = update.message.message_id
-	question = "@SaveTheBeeees @DankMemesCanMeltSteelBeams @hotterthanahotdog @bleachonmytshirt @prankpatrol @AtraWolf Overwatch?"
+	question = "@SaveTheBeeees @anobdya @hotterthanahotdog @bleachonmytshirt @prankpatrol @AtraWolf Overwatch?"
 	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 
 #command /forest makes the bot tag everyone in the chat that plays The Forest by their telegram username
 def forest(bot, update):
 	msg_ID = update.message.message_id
-	question = "@prankpatrol @Insolent_child @AtraWolf @SaveTheBeeees @DankMemesCanMeltSteelBeams forest?"
+	question = "@prankpatrol @Insolent_child @AtraWolf @SaveTheBeeees @anobdya forest?"
 	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 
 #command /dauntless makes the bot tag everyone in the chat that plays Dauntless by their telegram username
 def dauntless(bot, update):
 	msg_ID = update.message.message_id
-	question = "@prankpatrol @Insolent_child @AtraWolf @SaveTheBeeees @DankMemesCanMeltSteelBeams dauntless?"
+	question = "@prankpatrol @Insolent_child @AtraWolf @SaveTheBeeees @anobdya dauntless?"
 	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 
 #Method that reads every message sent in chat, and if a user says certain words it will interrupt.
@@ -216,6 +221,7 @@ def main():
 	overwatch_handler = CommandHandler('overwatch', overwatch)
 	forest_handler = CommandHandler('forest', forest)
 	dauntless_handler = CommandHandler('dauntless', dauntless)
+	ror_handler = CommandHandler('ror', ror)
 	interjection_handler = MessageHandler(Filters.all, interjection)
 
 	#Unkown doesn't quite work yet
@@ -235,6 +241,7 @@ def main():
 	dispatcher.add_handler(overwatch_handler)
 	dispatcher.add_handler(forest_handler)
 	dispatcher.add_handler(dauntless_handler)
+	dispatcher.add_handler(ror_handler)
 
 	dispatcher.add_handler(interjection_handler)	
 	dispatcher.add_handler(unknown_handler)
@@ -244,4 +251,3 @@ def main():
 	updater.start_polling()
 
 main()
-
