@@ -130,7 +130,7 @@ def apex(bot, update, args):
 	msg_ID = update.message.message_id
 
 	if not args:
-		question = "@SaveTheBeeees @anobdya @hotterthanahotdog @AtraWolf @prankpatrol apex?"
+		question = "@SaveTheBeeees @anobdya @hotterthanahotdog @AtraWolf @bleachonmytshirt @prankpatrol apex?"
 		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 	else:
 		platform = args[0]
