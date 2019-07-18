@@ -16,34 +16,68 @@ def getStats(platform, name):
     total_kills = data['stats'][1]['value']
     total_kills = int(total_kills)
     resp = "*Total Kills:* {}\n".format(total_kills)
-    
     for character in data['children']:
         character_name = character['metadata']['legend_name']
-        character_stat1_name = character['stats'][0]['metadata']['name']
-        character_stat1_value = character['stats'][0]['displayValue']
-        character_stat2_name = ''
-        character_stat2_value = ''
-        character_stat3_name = ''
-        character_stat3_value = ''
-        character_stat2 = True
-        character_stat3 = True
-        try:
-            character_stat2_name = character['stats'][1]['metadata']['name']
-            character_stat2_value = character['stats'][1]['displayValue']
-        except:
-            character_stat2 = False
-        try:
-            character_stat3_name = character['stats'][2]['metadata']['name']
-            character_stat3_value = character['stats'][2]['displayValue']
-        except:
-            character_stat3 = False
-        
-        if(not character_stat2 and not character_stat3):
-            resp += "\n*{}:*\n    *{}:* {}".format(character_name, character_stat1_name, character_stat1_value)
-        elif(character_stat2 and not character_stat3):
-            resp += "\n*{}:*\n    *{}:* {}\n    *{}:* {}".format(character_name, character_stat1_name, character_stat1_value, character_stat2_name, character_stat2_value)
-        elif(character_stat2 and character_stat3):
-            resp += "\n*{}:*\n    *{}:* {}\n    *{}:* {}\n    *{}:* {}".format(character_name, character_stat1_name, character_stat1_value, character_stat2_name, character_stat2_value, character_stat3_name, character_stat3_value)
-        #resp += "\n*{}*\n    *{}:* {}\n    *{}:* {}\n    *{}:* {}".format(character_name, character_stat1_name, character_stat1_value, character_stat2_name, character_stat2_value, character_stat3_name, character_stat3_value)
-    
+        resp += "*{}:* \n".format(character_name)
+        for stat in character['stats']:
+            char_stat_name = stat['metadata']['name']
+            if(character_name == "Bangalore"):
+                if(char_stat_name == "Legend Specific 1"):
+                    char_stat_name = "Creeping Barrage: Damage"
+                elif(char_stat_name == "Legend Specific 2"):
+                    char_stat_name = "Smoke Grenade: Enemies Hit"
+                elif(char_stat_name == "Legend Specific 3"):
+                    char_stat_name = "Double Time: Distance"
+            elif(character_name == "Bloodhound"):
+                if(char_stat_name == "Legend Specific 1"):
+                    char_stat_name = "Beast of the Hunt: Kills"
+                elif(char_stat_name == "Legend Specific 2"):
+                    char_stat_name = "Eye: Enemies Scanned"
+                elif(char_stat_name == "Legend Specific 3"):
+                    char_stat_name = "Eye: Traps Scanned"
+            elif(character_name == "Caustic"):
+                if(char_stat_name == "Legend Specific 1"):
+                    char_stat_name = "NOX: Gas Damage Dealt"
+                elif(char_stat_name == "Legend Specific 2"):
+                    char_stat_name = "Gas Trap: Times Activated"
+                elif(char_stat_name == "Legend Specific 3"):
+                    char_stat_name = "NOX: Gassed Enemies Killed"
+            elif(character_name == "Gibraltar"):
+                if(char_stat_name == "Legend Specific 1"):
+                    char_stat_name = "Bombardment: Kills"
+                elif(char_stat_name == "Legend Specific 2"):
+                    char_stat_name = "Dome: Damage Blocked"
+                elif(char_stat_name == "Legend Specific 3"):
+                    char_stat_name = "Gun Shield: Damage Blocked"
+            elif(character_name == "Lifeline"):
+                if(char_stat_name == "Legend Specific 1"):
+                    char_stat_name = "Drop Pod: Items for Squadmates"
+                elif(char_stat_name == "Legend Specific 2"):
+                    char_stat_name = "Revive Shield: Damage Blocked"
+                elif(char_stat_name == "Legend Specific 3"):
+                    char_stat_name = "D.O.C. Drone: Healing"
+            elif(character_name == "Mirage"):
+                if(char_stat_name == "Legend Specific 1"):
+                    char_stat_name = "Bamboozles"
+                elif(char_stat_name == "Legend Specific 2"):
+                    char_stat_name = "Encore: Executions Escaped"
+                elif(char_stat_name == "Legend Specific 3"):
+                    char_stat_name = "Decoys Created"
+            elif(character_name == "Pathfinder"):
+                if(char_stat_name == "Legend Specific 1"):
+                    char_stat_name = "Zipline: Times Used by Squad"
+                elif(char_stat_name == "Legend Specific 2"):
+                    char_stat_name = "Grapple: Travel Distance"
+                elif(char_stat_name == "Legend Specific 3"):
+                    char_stat_name = "Survey: Beacons Scanned"
+            elif(character_name == "Wraith"):
+                if(char_stat_name == "Legend Specific 1"):
+                    char_stat_name = "Rifts: Squadmates Phased"
+                elif(char_stat_name == "Legend Specific 2"):
+                    char_stat_name = "Phase Walk: Time"
+                elif(char_stat_name == "Legend Specific 3"):
+                    char_stat_name = "Voices: Warnings Heard"
+
+            resp += "    *{}*: {}\n".format(char_stat_name, stat['displayValue'])
+
     return resp
