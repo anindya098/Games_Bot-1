@@ -88,7 +88,12 @@ def dota(bot, update):
 	question = "@Insolent_child @AtraWolf @prankpatrol dota?"
 	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 
-
+#command /ror makes the bot tag everyone in the chat that plays Risk of Rain by their telegram username
+def ror(bot, update):
+	msg_ID = update.message.message_id
+	question = "@SaveTheBeeees @anobdya @Insolent_child @AtraWolf @prankpatrol Risk of Rain 2?"
+	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
+	
 #command /fortnite can take optional arguments
 def fortnite(bot, update, args):
 	msg_ID = update.message.message_id
@@ -216,6 +221,7 @@ def main():
 	overwatch_handler = CommandHandler('overwatch', overwatch)
 	forest_handler = CommandHandler('forest', forest)
 	dauntless_handler = CommandHandler('dauntless', dauntless)
+	ror_handler = CommandHandler('ror', ror)
 	interjection_handler = MessageHandler(Filters.all, interjection)
 
 	#Unkown doesn't quite work yet
@@ -235,6 +241,7 @@ def main():
 	dispatcher.add_handler(overwatch_handler)
 	dispatcher.add_handler(forest_handler)
 	dispatcher.add_handler(dauntless_handler)
+	dispatcher.add_handler(ror_handler)
 
 	dispatcher.add_handler(interjection_handler)	
 	dispatcher.add_handler(unknown_handler)
@@ -244,4 +251,3 @@ def main():
 	updater.start_polling()
 
 main()
-
