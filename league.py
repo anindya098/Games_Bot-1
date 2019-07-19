@@ -91,18 +91,25 @@ def getRankedStats(summoner_name):
 	summoner_id = summoner_info[5]
 
 	#Make the API call based off of the player name given
-	url = base_URL + "league/v4/positions/by-summoner/" + summoner_id
+	url = base_URL + "league/v4/entries/by-summoner/" + summoner_id
 	r = requests.get(url, headers=headers)
 	data = r.json()
 	resp = ""
 	
-	for position in data:
-		pos = position['position']
-		tier = position['tier']
-		rank = position['rank']
-		lp = position['leaguePoints']
+	for queue in data:
+		queue_type = queue['queueType']
+		tier = queue['tier']
+		rank = queue['rank']
+		lp = queue['leaguePoints']
+
+		if(queue_type == "RANKED_FLEX_SR"):
+			queue_type = "Ranked Flex"
+		elif(queue_type == "RANKED_SOLO_5x5"):
+			queue_type = "Ranked Solo/Duo"
+		elif(queue_type == "RANKED_TFT"):
+			queue_type = "Ranked TFT"
 		
-		resp += "*{}:*\n{} {}, {}LP \n\n".format(pos.capitalize(), tier.capitalize(), rank, lp)
+		resp += "*{}:*\n{} {}, {}LP \n\n".format(queue_type, tier.capitalize(), rank, lp)
 
 	return resp
 
