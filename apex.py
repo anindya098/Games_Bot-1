@@ -13,9 +13,14 @@ def getStats(platform, name):
         data = data['data']
     except KeyError:
         return "That's not a player, babe"
+    try:
+        rank = data['stats'][3]['value']
+    except:
+        rank = -1
+    rank = rpToRank(rank)
     total_kills = data['stats'][1]['value']
     total_kills = int(total_kills)
-    resp = "*Total Kills:* {}\n".format(total_kills)
+    resp = "*{}*\n\n*Total Kills:* {}\n".format(rank, total_kills)
     for character in data['children']:
         character_name = character['metadata']['legend_name']
         resp += "*{}:* \n".format(character_name)
@@ -81,3 +86,85 @@ def getStats(platform, name):
             resp += "    *{}*: {}\n".format(char_stat_name, stat['displayValue'])
 
     return resp
+
+def rpToRank(rp):
+    """
+    Bronze Starts at 0, 30 between each rank
+    B4 - 0
+    B3 - 30
+    B2 - 60
+    B1 - 90
+
+    Silver Starts at 120, 40 between each rank
+    S4 - 120
+    S3 - 160
+    S2 - 200
+    S1 - 240
+
+    Gold Starts at 280, 50 between each rank
+    G4 - 280
+    G3 - 330
+    G2 - 380
+    G1 - 430
+
+    Plat Starts at 480, 60 between each rank
+    P4 - 480
+    P3 - 540
+    P2 - 600
+    P1 - 660
+
+    Diamond Starts at 720, 70 between each rank
+    D4 - 720
+    D3 - 790
+    D2 - 860
+    D1 - 930
+
+    Apex Predator is 1000+
+    """
+
+    if(rp >= 1000):
+        return "Apex Predator"
+    elif(rp >= 930):
+        return "Diamond I"
+    elif(rp >= 860):
+        return "Diamond II"
+    elif(rp >= 790):
+        return "Diamond III"
+    elif(rp >= 720):
+        return "Diamond IV"
+    elif(rp >= 660):
+        return "Platinum I"
+    elif(rp >= 600):
+        return "Platinum II"
+    elif(rp >= 540):
+        return "Platinum III"
+    elif(rp >= 480):
+        return "Platinum IV"
+    elif(rp >= 430):
+        return "Gold I"
+    elif(rp >= 380):
+        return "Gold II"
+    elif(rp >= 330):
+        return "Gold III"
+    elif(rp >= 280):
+        return "Gold IV"
+    elif(rp >= 240):
+        return "Silver I"
+    elif(rp >= 200):
+        return "Silver II"
+    elif(rp >= 160):
+        return "Silver III"
+    elif(rp >= 120):
+        return "Silver IV"
+    elif(rp >= 90):
+        return "Bronze I"
+    elif(rp >= 60):
+        return "Bronze II"
+    elif(rp >= 30):
+        return "Bronze III"
+    elif(rp >= 0):
+        return "Bronze IV"
+    elif(rp == -1):
+        return "Unranked"
+   
+    
