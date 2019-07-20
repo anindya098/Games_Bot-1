@@ -14,7 +14,7 @@ def getStats(platform, name):
     except KeyError:
         return "That's not a player, babe"
     try:
-        rank = data['stats'][3]['value']
+        rank = data['stats'][len(data['stats'])-1]['value']
     except:
         rank = -1
     rank = rpToRank(rank)
