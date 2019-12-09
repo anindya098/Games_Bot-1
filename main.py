@@ -76,11 +76,10 @@ def league(bot, update, args):
 		for i in args:
 			summoner_name = summoner_name + i + " "
 
-		ranked_stats = lg.getRankedStats(summoner_name)
-		if(ranked_stats == ""):
-			bot.send_message(parse_mode='MARKDOWN', chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text="Hey you gotta play ranked dude!")
-		else:	
-			bot.send_message(parse_mode='MARKDOWN', chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=ranked_stats)
+		bot.send_message(parse_mode='MARKDOWN', chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text="beep boop one sec")
+		ranked_stats = lg.getAllStats(summoner_name)
+		bot.send_chat_action(chat_id=update.message.chat_id, action="UPLOAD_PHOTO")
+		bot.send_photo(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, photo=open("statstest.png", 'rb'))
 
 #command /dota makes the bot tag everyone in the chat that plays Dota by their telegram username
 def dota(bot, update):

@@ -4,7 +4,7 @@ Everything League of Legends related in this bot is using an API key from Riot G
 
 from telegram import InputMedia, InputMediaPhoto
 import json, requests, os
-from imagestuff import addToImage
+from imagestuff import addToImage, createStatsImage
 
 #base_URL is the base URL for Riot's API. All calls extend this URL
 #API_key is the API key proved by Riot that is needed to use the API
@@ -76,7 +76,7 @@ def getChampMastery(summoner_name):
 
 	#For each champion object, add the top 5 champions with the most mastery points to a list
 	for champ in data:
-		if not (len(champs) >= 5 and len(points) >= 5):
+		if not (len(champs) >= 3 and len(points) >= 3):
 			champs.append(champ_dict.get(str(champ["championId"])))
 			points.append(champ["championPoints"])
 		else:
@@ -91,18 +91,25 @@ def getRankedStats(summoner_name):
 	summoner_id = summoner_info[5]
 
 	#Make the API call based off of the player name given
-	url = base_URL + "league/v4/positions/by-summoner/" + summoner_id
+	url = base_URL + "league/v4/entries/by-summoner/" + summoner_id
 	r = requests.get(url, headers=headers)
 	data = r.json()
 	resp = ""
 	
-	for position in data:
-		pos = position['position']
-		tier = position['tier']
-		rank = position['rank']
-		lp = position['leaguePoints']
+	for queue in data:
+		queue_type = queue['queueType']
+		tier = queue['tier']
+		rank = queue['rank']
+		lp = queue['leaguePoints']
+
+		if(queue_type == "RANKED_FLEX_SR"):
+			queue_type = "Ranked Flex"
+		elif(queue_type == "RANKED_SOLO_5x5"):
+			queue_type = "Ranked Solo/Duo"
+		elif(queue_type == "RANKED_TFT"):
+			queue_type = "Ranked TFT"
 		
-		resp += "*{}:*\n{} {}, {}LP \n\n".format(pos.capitalize(), tier.capitalize(), rank, lp)
+		resp += "*{}:*\n{} {}, {}LP \n\n".format(queue_type, tier.capitalize(), rank, lp)
 
 	return resp
 
@@ -131,3 +138,55 @@ def getCurrentGame(summoner_name):
 	#For each player in the game, add their name and the champion they are playing to an image (method found in imagestuff.py)
 	for i, player in enumerate(players):
 		addToImage(player, champs[i], i)
+
+
+def getAllStats(summoner_name):
+	summoner_info = getSummonerInfo(summoner_name)
+	summoner_name = summoner_info[1]
+	summoner_id = summoner_info[5]
+
+
+	#"globals" that will be needed to pass to image creation
+	tier = ""
+	rank = ""
+	lp = ""
+
+	#Make the API call based off of the player name given
+	url = base_URL + "league/v4/entries/by-summoner/" + summoner_id
+	r = requests.get(url, headers=headers)
+	data = r.json()
+
+	for queue in data:
+		#go through the json until we find the solo queue stats
+		if(queue['queueType'] != "RANKED_SOLO_5x5"):
+			continue
+
+
+		tier = queue['tier'].capitalize()
+		rank = queue['rank']
+		lp = queue['leaguePoints']
+
+	if(tier == ""):
+		tier = "Unranked"
+
+	#Now rank tier and LP are grabbed. If player is unranked, then tier will be "Unranked" and rank / LP will be empty
+
+	#Now we get Champ Mastery data
+	champ_mastery_result = getChampMastery(summoner_name)
+	count = 0
+	reply = ""
+	#For each champion (up to 5), add to a string their name and the points the player has on them.
+	for champ in champ_mastery_result[0]:
+		reply += champ + " - " + str(champ_mastery_result[1][count]) + "\n"
+		count += 1
+
+	champ1 = champ_mastery_result[0][0]
+	champ1_pts = "{:,}".format(champ_mastery_result[1][0])
+	champ2 = champ_mastery_result[0][1]
+	champ2_pts = "{:,}".format(champ_mastery_result[1][1])
+	champ3 = champ_mastery_result[0][2]
+	champ3_pts = "{:,}".format(champ_mastery_result[1][2])
+
+	#return "{} - {}\n{} - {}\n{} - {}\n".format(champ1, champ1_pts, champ2, champ2_pts, champ3, champ3_pts)
+	
+	createStatsImage(summoner_name, tier, rank, lp, champ1, champ2, champ3, champ1_pts, champ2_pts, champ3_pts)
