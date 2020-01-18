@@ -69,7 +69,7 @@ def match(bot, update, args):
 def league(bot, update, args):
 	msg_ID = update.message.message_id
 	if not args:
-		question = "@SaveTheBeeees @anobdya @hotterthanahotdog @bleachonmytshirt @TheKidThatOutRanEkko @Insolent_child league?"
+		question = "@SaveTheBeeees @anobdya @hotterthanahotdog @weloseifsejuanidoesntgank @TheKidThatOutRanEkko @Insolent_child @Atrawolf @GangplankWinsIfHeDoesntAFK league?"
 		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 	else:
 		summoner_name = ""
