@@ -69,7 +69,7 @@ def match(bot, update, args):
 def league(bot, update, args):
 	msg_ID = update.message.message_id
 	if not args:
-		question = "@SaveTheBeeees @anobdya @hotterthanahotdog @weloseifsejuanidoesntgank @TheKidThatOutRanEkko @Insolent_child @Atrawolf @GangplankWinsIfHeDoesntAFK league?"
+		question = "@SaveTheBeeees @anobdya @hotterthanahotdog @weloseifsejuanidoesntgank @TheKidThatOutRanEkko @Insolent_child @Atrawolf @bleachonmytshirt league?"
 		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 	else:
 		summoner_name = ""
@@ -90,7 +90,13 @@ def dota(bot, update):
 #command /ror makes the bot tag everyone in the chat that plays Risk of Rain by their telegram username
 def ror(bot, update):
 	msg_ID = update.message.message_id
-	question = "@SaveTheBeeees @anobdya @Insolent_child @AtraWolf @prankpatrol Risk of Rain 2?"
+	question = "@SaveTheBeeees @anobdya @AtraWolf @prankpatrol Risk of Rain 2?"
+	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
+
+#command /ror makes the bot tag everyone in the chat that plays Risk of Rain by their telegram username
+def r6s(bot, update):
+	msg_ID = update.message.message_id
+	question = "@SaveTheBeeees @anobdya @Insolent_child @AtraWolf @prankpatrol R6 Siege?"
 	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 	
 #command /fortnite can take optional arguments
@@ -221,6 +227,7 @@ def main():
 	forest_handler = CommandHandler('forest', forest)
 	dauntless_handler = CommandHandler('dauntless', dauntless)
 	ror_handler = CommandHandler('ror', ror)
+	r6s_handler = CommandHandler('r6s', r6s)
 	interjection_handler = MessageHandler(Filters.all, interjection)
 
 	#Unkown doesn't quite work yet
@@ -241,6 +248,7 @@ def main():
 	dispatcher.add_handler(forest_handler)
 	dispatcher.add_handler(dauntless_handler)
 	dispatcher.add_handler(ror_handler)
+	dispatcher.add_handler(r6s_handler)
 
 	dispatcher.add_handler(interjection_handler)	
 	dispatcher.add_handler(unknown_handler)
