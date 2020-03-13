@@ -96,7 +96,7 @@ def ror(bot, update):
 #command /ror makes the bot tag everyone in the chat that plays Risk of Rain by their telegram username
 def r6s(bot, update):
 	msg_ID = update.message.message_id
-	question = "@SaveTheBeeees @anobdya @Insolent_child @AtraWolf @prankpatrol R6 Siege?"
+	question = "@SaveTheBeeees @anobdya @Insolent_child @AtraWolf @prankpatrol @LoneliestProton R6 Siege?"
 	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 	
 #command /fortnite can take optional arguments
