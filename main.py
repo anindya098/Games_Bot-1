@@ -171,7 +171,7 @@ def overwatch(bot, update):
 #command /valorant makes the bot tag everyone in the chat that plays Overwatch by their telegram username
 def valorant(bot, update):		
 	msg_ID = update.message.message_id
-	question = "@SaveTheBeeees @anobdya @hotterthanahotdog @bleachonmytshirt @prankpatrol @AtraWolf Valorant?"
+	question = "@SaveTheBeeees @anobdya @hotterthanahotdog @bleachonmytshirt @prankpatrol @AtraWolf @GangplankWinsIfHeDoesntAFK Valorant?"
 	bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=question)
 		
 #command /forest makes the bot tag everyone in the chat that plays The Forest by their telegram username
