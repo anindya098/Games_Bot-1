@@ -199,6 +199,10 @@ def interjection(bot, update):
 		i = random.randrange(len(strings.master_yi))
 		reply = strings.master_yi[i]
 		bot.send_message(chat_id=update.message.chat_id, reply_to_message_id=msg_ID, text=reply)
+	#If Josh says the word clash, the bot replies to his message with a kekw 
+	if(from_user == "Joshua" and "clash" in msg_lst):
+		sticker_url = "https://pasteboard.co/JgCl0jz.webp"
+		bot.sendSticker(chat_id=update.message.chat_id, sticker=sticker_url, disable_notification = FALSE, reply_to_message_id = msg_ID, reply_markup = NULL)
 
 #If a user types in a command that doesn't exist then the bot will reply to them (doesn't work yet)
 def unknown(bot, update):
